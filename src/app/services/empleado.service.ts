@@ -20,6 +20,16 @@ export class EmpleadoService {
 
   //Este metodo nos sirve para registrar un empleado
   registrarEmpleado(empleado : Empleado) : Observable<Object>{
-    return this.httpClient.post(`${this.baseURL}`, empleado)
+    return this.httpClient.post(`${this.baseURL}`, empleado);
+  }
+
+  //Este metodo sirve para actualizar los datos de un empleado
+  actualizarEmpleado(id:number,empleado:Empleado) : Observable<Object>{
+    return this.httpClient.put(`${this.baseURL}/${id}`, empleado);
+  }
+
+  //Este metodo elimina empleado
+  eliminarEmpleado(id:number):Observable<Object>{
+    return this.httpClient.delete(`${this.baseURL}/${id}`)
   }
 }
