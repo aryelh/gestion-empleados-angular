@@ -1,4 +1,8 @@
+import swal from 'sweetalert2';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Empleado } from 'src/app/empleado';
+import { EmpleadoService } from 'src/app/services/empleado.service';
 
 @Component({
   selector: 'app-actualizar-empleado',
@@ -7,9 +11,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ActualizarEmpleadoComponent implements OnInit {
 
-  constructor() { }
+  id:number;
+  empleado:Empleado = new Empleado();
+  
+  constructor(private empleadoService:EmpleadoService, private router:Router, private route:ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.id = this.route.snapshot.params['id'];
+    this.empleadoService.obtenerEmpleadoPorId(this.id).subscribe(dato =>{
+      this.empleado = dato;
+    }, error => console.log(error));
+  }
+
+  irAListaDeEmpleados(){
+    this.router.navigate(['/empleados']);
+    swal.fire('Empleado actualizado', `El empleado ${this.empleado.nombre} ha sido actualizado con exito`, `success`)
+  }
+
+  onSubmit(){
+    this.empleadoService.actualizarEmpleado(this.id, this.empleado).subscribe(dato=>{
+      this.irAListaDeEmpleados();
+    }, error => console.log(error));
   }
 
 }

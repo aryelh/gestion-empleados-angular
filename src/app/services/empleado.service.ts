@@ -28,8 +28,13 @@ export class EmpleadoService {
     return this.httpClient.put(`${this.baseURL}/${id}`, empleado);
   }
 
-  //Este metodo elimina empleado
-  eliminarEmpleado(id:number):Observable<Object>{
-    return this.httpClient.delete(`${this.baseURL}/${id}`)
+  obtenerEmpleadoPorId(id:number):Observable<Empleado>{
+    return this.httpClient.get<Empleado>(`${this.baseURL}/${id}`);
   }
+
+  //Este metodo elimina empleado no se necesita crear el COMPONENTE eliminarEmpleado
+  eliminarEmpleado(id:number):Observable<Object>{
+    return this.httpClient.delete(`${this.baseURL}/${id}`);
+  }
+
 }
